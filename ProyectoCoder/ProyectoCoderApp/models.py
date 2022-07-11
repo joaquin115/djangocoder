@@ -1,4 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
+
+# modelo del avatar
+class Avatar(models.Model):
+
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    imagen = models.ImageField(upload_to='avatar/', blank=True, null=True)
+
 
 # Create your models here.
 
@@ -24,6 +33,8 @@ class Profesor(models.Model):
 
     profesion = models.CharField(max_length=30)
 
+    # dni = models.IntegerField()
+
     class Meta:
         verbose_name_plural = "Profesores"
 
@@ -32,3 +43,6 @@ class Entregable(models.Model):
     nombre = models.CharField(max_length=30)
     fechaEntrega = models.DateField()
     entregado = models.BooleanField()
+
+    def __str__(self) -> str: # modificar como se visualiza
+        return f"Entregable: {self.nombre} en la fecha {self.fechaEntrega}"
